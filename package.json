@@ -1,0 +1,14 @@
+{
+  "name": "fangcan-server",
+  "description": "Fangcan info grab and support server.",
+  "tags": [
+    "fangcan"
+  ],
+  "version": "0.0.0",
+  "author": "xuliu",
+  "main": "app.js",
+  "dependencies": {
+    "request": "*",
+    "cheerio": "*"
+  }
+}
