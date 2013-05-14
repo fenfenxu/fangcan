@@ -1,5 +1,7 @@
 var request = require('request'), cheerio = require('cheerio'), xiangmuPre = require('./xiangmu-pre');
 var mongoose = require('mongoose');
+var urlBase = 'http://www.jnfdc.gov.cn';
+var urls = [];
 xiangmuPre.on("onload", function(data) {
 	console.log(data);
 	var url = 'http://www.jnfdc.gov.cn/onsaling/index';
@@ -8,10 +10,14 @@ xiangmuPre.on("onload", function(data) {
 		request(url + i + '.shtml', function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				console.log('loaded');
-				parse(cheerio.load(body));
+				parseUrl(cheerio.load(body));
 			} else {
 				// fail to load, try reload
-				console.err("fail load");
+				console.log("fail load");
+			}
+			if(i == data.totalPages){
+				console.log(urls);
+				getXiangmu();
 			}
 		});
 	}
@@ -19,11 +25,33 @@ xiangmuPre.on("onload", function(data) {
 	
 });
 
-
-function parse($) {
-	console.log($.html());
-};
-
+function parseUrl($) {
+	
+	$('.project_table a').each(function(index, element){
+		urls[urls.length] = $(element).attr('href');
+	});
+	
+	
+	
+//	console.log($.html());
+}
+function parseXiangmu($){
+	console.log($('body').html());
+}
+function getXiangmu(){
+	urls.forEach(function(element, index){
+		
+		request(urlBase + element, function(error, response, body){
+			if (!error && response.statusCode == 200) {
+				console.log('loaded');
+				parseXiangmu(cheerio.load(body));
+			} else {
+				// fail to load, try reload
+				console.log("fail load");
+			}
+		});
+	});
+}
 console.log('start');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
