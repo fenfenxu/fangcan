@@ -1,4 +1,4 @@
-var request = require('request'), cheerio = require('cheerio');
+var request = require('request'), cheerio = require('cheerio'), nimble = require('nimble'); 
 var url = 'http://www.jnfdc.gov.cn/onsaling/index.shtml';
 var url = url || 'http://localhost/Test/fangcan/dailysale.htm';
 var saleDetails = [], saleInfos = [];

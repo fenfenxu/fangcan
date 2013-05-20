@@ -10,6 +10,7 @@
   "dependencies": {
     "request": "*",
     "cheerio": "*",
-    "mongoose":"*"
+    "mongoose":"*",
+	"nimble":"*"
   }
 }
